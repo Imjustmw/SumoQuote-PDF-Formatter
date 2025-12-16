@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.eggs/
+
+# Virtual environments
+venv/
+.env/
+.env.*
+.env
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+
+# PDFs / outputs
+output/
+*.pdf
+
+# Test & local artifacts
+sample_payload*.json
+schema.example.json
+test_pipeline.py
+debug_*.py
+
+# Logs
+*.log
+
+# PyMuPDF temp files
+*.tmp
