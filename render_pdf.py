@@ -151,6 +151,23 @@ def render_pdf(project: dict, items: list, inspection_images: list, show_prices:
         elements.append(table)
 
     # ─────────────────────────────────────
+    # Total
+    # ─────────────────────────────────────
+    if show_prices:
+        total = grand_total
+        extracted_total = project.get("extracted_total")
+
+        # If prices are not present per-item, use extracted_total
+        if (total == 0.0) and (extracted_total is not None):
+            total = float(extracted_total)
+
+        elements.append(Spacer(1, 20))
+        elements.append(Paragraph(
+            f"<b>Total Contract Value:</b> ${total:,.2f}",
+            styles["Heading2"]
+        ))
+        
+    # ─────────────────────────────────────
     # Inspection Summary
     # ─────────────────────────────────────
     elements.append(Spacer(1, 20))
@@ -169,23 +186,6 @@ def render_pdf(project: dict, items: list, inspection_images: list, show_prices:
         )
 
     elements.append(Paragraph(inspection_text, styles["Normal"]))
-
-    # ─────────────────────────────────────
-    # Total
-    # ─────────────────────────────────────
-    if show_prices:
-        total = grand_total
-        extracted_total = project.get("extracted_total")
-
-        # If prices are not present per-item, use extracted_total
-        if (total == 0.0) and (extracted_total is not None):
-            total = float(extracted_total)
-
-        elements.append(Spacer(1, 20))
-        elements.append(Paragraph(
-            f"<b>Total Contract Value:</b> ${total:,.2f}",
-            styles["Heading2"]
-        ))
 
     # ─────────────────────────────────────
     # Inspection Images Page

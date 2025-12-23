@@ -75,7 +75,7 @@ def extract_preferred_package_items(pdf_path: str):
             break
 
     if start_page is None:
-        print("⚠️ Preferred Package heading not found.")
+        print(" Preferred Package heading not found.")
         return [], None
 
     # Find end page

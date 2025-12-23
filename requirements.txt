@@ -1,5 +1,6 @@
-flask
+﻿flask
 reportlab
 PyMuPDF
 pytesseract
-functions-framework==3.*
+requests
+gunicorn==22.*

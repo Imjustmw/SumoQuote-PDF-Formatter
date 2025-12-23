@@ -1,4 +1,4 @@
-# Build a lightweight image that can run the Cloud Function locally or in Cloud Run
+# Build a lightweight image to run the PDF formatter with a simple HTTP API
 FROM python:3.11-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -17,8 +17,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# Expose the port Cloud Run/Functions expect
 EXPOSE 8080
 
-# Launch the function using the Functions Framework
-CMD ["functions-framework", "--target", "main", "--port", "8080"]
+# Serve the Flask app
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "main:app"]
