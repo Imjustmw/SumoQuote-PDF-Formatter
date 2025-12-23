@@ -2,3 +2,4 @@ flask
 reportlab
 PyMuPDF
 pytesseract
+functions-framework==3.*

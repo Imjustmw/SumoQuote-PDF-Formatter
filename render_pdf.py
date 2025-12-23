@@ -151,29 +151,44 @@ def render_pdf(project: dict, items: list, inspection_images: list, show_prices:
         elements.append(table)
 
     # ─────────────────────────────────────
-    # Inspection Summary (placeholder)
+    # Inspection Summary
     # ─────────────────────────────────────
     elements.append(Spacer(1, 20))
     elements.append(Paragraph("<b>INSPECTION SUMMARY</b>", styles["Heading3"]))
     elements.append(Spacer(1, 6))
-    elements.append(Paragraph(
-        "Inspection completed and approved. Condensed inspection photos "
-        "and notes are included in the attached inspection section.",
-        styles["Normal"]
-    ))
+
+    if inspection_images:
+        inspection_text = (
+            "Inspection photos were detected in the signed contract and have been "
+            "condensed into the attached inspection snapshot section."
+        )
+    else:
+        inspection_text = (
+            "No inspection photo section was detected in the signed contract. "
+            "This summary includes scope items only."
+        )
+
+    elements.append(Paragraph(inspection_text, styles["Normal"]))
 
     # ─────────────────────────────────────
-    # Grand Total
+    # Total
     # ─────────────────────────────────────
     if show_prices:
+        total = grand_total
+        extracted_total = project.get("extracted_total")
+
+        # If prices are not present per-item, use extracted_total
+        if (total == 0.0) and (extracted_total is not None):
+            total = float(extracted_total)
+
         elements.append(Spacer(1, 20))
         elements.append(Paragraph(
-            f"<b>Total Contract Value:</b> ${grand_total:,.2f}",
+            f"<b>Total Contract Value:</b> ${total:,.2f}",
             styles["Heading2"]
         ))
 
     # ─────────────────────────────────────
-    # Image Summary
+    # Inspection Images Page
     # ─────────────────────────────────────
     if inspection_images:
         elements.append(PageBreak())
